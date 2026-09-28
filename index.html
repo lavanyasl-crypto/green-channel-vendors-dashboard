@@ -139,7 +139,7 @@ button{font-family:inherit;}
 .section-head .eyebrow svg{width:14px;height:14px;}
 
 /* ---------- KPI cards ---------- */
-.kpi-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:12px;}
+.kpi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
 .kpi-card{
   background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; padding:14px 16px;
   box-shadow:var(--shadow); display:flex; flex-direction:column; gap:6px; min-width:0;
@@ -155,7 +155,7 @@ button{font-family:inherit;}
 .kpi-label{font-size:0.78rem; color:var(--text-muted); font-weight:600;}
 
 /* ---------- charts ---------- */
-.chart-row{display:grid; grid-template-columns:1.4fr 1fr; gap:14px; align-items:stretch;}
+.chart-row{display:grid; grid-template-columns:1fr; gap:14px; align-items:stretch;}
 .card{
   background:var(--surface); border:1px solid var(--border-soft); border-radius:16px; padding:16px 18px;
   box-shadow:var(--shadow);
@@ -176,10 +176,6 @@ button{font-family:inherit;}
 .legend{display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-size:0.78rem; color:var(--text-2);}
 .legend-item{display:flex; align-items:center; gap:6px;}
 .legend-swatch{width:10px; height:10px; border-radius:3px; flex:none;}
-.donut-wrap{display:flex; align-items:center; gap:16px; justify-content:center; flex-wrap:wrap;}
-.donut-center-label{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none;}
-.donut-center-label .n{font-family:"Sora",sans-serif; font-size:1.5rem; font-weight:800; display:block; line-height:1;}
-.donut-center-label .t{font-size:0.7rem; color:var(--text-muted); font-weight:600;}
 
 /* ---------- vendor cards ---------- */
 .vendor-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
@@ -250,17 +246,6 @@ button{font-family:inherit;}
 .copy-feedback{font-size:0.76rem; color:var(--accent-strong); font-weight:700; opacity:0; transition:opacity .15s;}
 .copy-feedback.show{opacity:1;}
 
-/* ---------- critical panel ---------- */
-.critical-panel{background:var(--surface); border:1px solid var(--critical-border); border-radius:16px; padding:16px 18px; box-shadow:var(--shadow);}
-.critical-panel h2{color:var(--critical-text);}
-.critical-list{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
-.critical-row{
-  display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:11px; background:var(--surface-2); flex-wrap:wrap;
-}
-.critical-row .vc-dot{width:10px; height:10px; border-radius:50%; background:var(--vc); flex:none;}
-.critical-row .vname{font-weight:700; font-size:0.88rem; flex:1; min-width:120px;}
-.critical-row .ccount{font-size:0.78rem; color:var(--critical-text); font-weight:700;}
-
 /* ---------- table ---------- */
 .table-wrap{overflow-x:auto; border:1px solid var(--border-soft); border-radius:14px;}
 table{width:100%; border-collapse:collapse; font-size:0.85rem; min-width:680px;}
@@ -291,12 +276,10 @@ tbody tr.crit-row:hover{background:var(--critical-soft); filter:brightness(0.97)
 footer.note{font-size:0.78rem; color:var(--text-muted); text-align:center; padding-block:4px;}
 
 @media (max-width:900px){
-  .kpi-grid{grid-template-columns:repeat(3,1fr);}
-  .chart-row{grid-template-columns:1fr;}
   .vendor-grid{grid-template-columns:repeat(2,1fr);}
 }
 @media (max-width:560px){
-  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .kpi-grid{grid-template-columns:1fr;}
   .vendor-grid{grid-template-columns:1fr;}
   .reset-btn{margin-left:0;}
 }
@@ -313,7 +296,7 @@ footer.note{font-size:0.78rem; color:var(--text-muted); text-align:center; paddi
       </div>
       <div class="brand-text">
         <h1>Green Channel Vendors</h1>
-        <p>Fruit procurement dashboard &middot; supply mapping across 6 approved vendors</p>
+        <p>Green Channel &middot; Vendor Proposals</p>
       </div>
     </div>
     <span class="season-pill">
@@ -365,11 +348,6 @@ footer.note{font-size:0.78rem; color:var(--text-muted); text-align:center; paddi
         <div class="legend-item"><span class="legend-swatch" style="background:var(--critical)"></span>Critical articles</div>
       </div>
     </div>
-    <div class="card">
-      <h3>Procurement type mix</h3>
-      <p class="card-sub">Loose vs. cross dock, in current selection</p>
-      <div class="chart-wrap donut-wrap" id="donutWrap"></div>
-    </div>
   </section>
 
   <section>
@@ -384,40 +362,6 @@ footer.note{font-size:0.78rem; color:var(--text-muted); text-align:center; paddi
       <span class="sub">Critical articles are flagged orange, matching the source sheet</span>
     </div>
     <div class="vendor-grid" id="vendorGrid"></div>
-  </section>
-
-  <section class="critical-panel">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow" style="color:var(--critical-text);">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.3" r="0.6" fill="currentColor"/></svg>
-          Critical article alerts
-        </div>
-        <h2>Notify vendors of critical stock priorities</h2>
-      </div>
-      <button class="btn critical" id="notifyAllBtn">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 3-1 5-2 6h16c-1-1-2-3-2-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 18a2.5 2.5 0 0 0 5 0" stroke="currentColor" stroke-width="1.7"/></svg>
-        Build master critical report
-      </button>
-    </div>
-    <div class="critical-list" id="criticalList"></div>
-    <div class="notify-panel" id="masterNotifyPanel">
-      <div class="notify-panel-head">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 3-1 5-2 6h16c-1-1-2-3-2-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-          Master critical article report
-        </span>
-        <button class="notify-close" id="masterNotifyClose"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-      </div>
-      <div class="notify-text" id="masterNotifyText"></div>
-      <div class="notify-footer">
-        <button class="btn primary" id="masterCopyBtn">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7"/></svg>
-          Copy report
-        </button>
-        <span class="copy-feedback" id="masterCopyFeedback">Copied to clipboard</span>
-      </div>
-    </div>
   </section>
 
   <section>
@@ -480,13 +424,13 @@ const DATA = [
 {"vendor":"DMC","code":1007,"name":"Yelakki Banana","weight":"1kg","type":"LOOSE","critical":true},
 {"vendor":"DMC","code":788544,"name":"Baby Yelakki Banana","weight":"1kg","type":"LOOSE","critical":true},
 {"vendor":"DMC","code":1004,"name":"Robusta Banana Mini Pack","weight":"1kg","type":"LOOSE","critical":true},
-{"vendor":"Mr Fruiuts","code":5932,"name":"Apple - Ber","weight":"500gm","type":"CROSS DOCK","critical":false},
-{"vendor":"Mr Fruiuts","code":21024,"name":"Apple Kashmiri","weight":"1kg","type":"LOOSE","critical":false},
-{"vendor":"Mr Fruiuts","code":22446,"name":"Avocado Semiripe Indian (Butterfruit)","weight":"1Piece","type":"LOOSE","critical":false},
-{"vendor":"Mr Fruiuts","code":1114,"name":"Chikoo - Sapota","weight":"1kg","type":"LOOSE","critical":false},
-{"vendor":"Mr Fruiuts","code":647625,"name":"Crunchy Shimla Apple Large","weight":"1Piece","type":"LOOSE","critical":false},
-{"vendor":"Mr Fruiuts","code":30807,"name":"Pineapple","weight":"1Piece","type":"LOOSE","critical":false},
-{"vendor":"Mr Fruiuts","code":17455,"name":"Pineapple","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruits","code":5932,"name":"Apple - Ber","weight":"500gm","type":"CROSS DOCK","critical":false},
+{"vendor":"Mr Fruits","code":21024,"name":"Apple Kashmiri","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruits","code":22446,"name":"Avocado Semiripe Indian (Butterfruit)","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruits","code":1114,"name":"Chikoo - Sapota","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruits","code":647625,"name":"Crunchy Shimla Apple Large","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruits","code":30807,"name":"Pineapple","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruits","code":17455,"name":"Pineapple","weight":"1Piece","type":"LOOSE","critical":false},
 {"vendor":"VM agro","code":1114,"name":"Chikoo - Sapota","weight":"1kg","type":"LOOSE","critical":true},
 {"vendor":"VM agro","code":21047,"name":"Daily Juice Sweet Lime","weight":"1kg","type":"LOOSE","critical":false},
 {"vendor":"VM agro","code":10491,"name":"Guava","weight":"1kg","type":"LOOSE","critical":true},
@@ -588,33 +532,14 @@ function buildVendorReport(vendor){
   return `Subject: Critical article priority - ${vendor}\n\nHi ${vendor} team,\n\nPlease ensure guaranteed availability and priority dispatch for the following critical articles this season:\n\n${lines.join('\n')}\n\nThese are marked critical for continuity of green channel supply. Kindly confirm stock status at the earliest.\n\n- Green Channel Team`;
 }
 
-function buildMasterReport(){
-  const critByVendor = VENDORS.map(v => ({ v, rows: vendorRows(v, false).filter(r => r.critical) })).filter(x => x.rows.length);
-  if(!critByVendor.length) return 'No critical articles are currently flagged across any vendor.';
-  let out = `Subject: Critical article report - all vendors\n\nSeason critical articles by vendor:\n`;
-  critByVendor.forEach(({v, rows}) => {
-    out += `\n${v} (${rows.length} critical):\n`;
-    rows.forEach((r,i) => { out += `  ${i+1}. ${r.name}${r.code != null ? ' (code ' + r.code + ')' : ''} - ${r.weight}, ${r.type}\n`; });
-  });
-  out += `\n- Green Channel Team`;
-  return out;
-}
-
 /* ---------------- KPIs (global, unfiltered truth) ---------------- */
 function renderKPIs(){
   const total = DATA.length;
   const critical = DATA.filter(d => d.critical).length;
-  const vendorsWithCrit = VENDORS.filter(v => DATA.some(d => d.vendor === v && d.critical)).length;
-  const crossDock = DATA.filter(d => d.type === 'CROSS DOCK').length;
-  const loose = total - crossDock;
-  const avg = (total / VENDORS.length).toFixed(1);
   const kpis = [
     { icon: ICONS.users, label: 'Approved vendors', value: VENDORS.length },
     { icon: ICONS.box, label: 'Total articles', value: total },
-    { icon: ICONS.flag, label: 'Critical articles', value: critical, crit: true },
-    { icon: ICONS.bell, label: 'Vendors with criticals', value: `${vendorsWithCrit}/${VENDORS.length}`, crit: true },
-    { icon: ICONS.truck, label: 'Cross dock items', value: crossDock },
-    { icon: ICONS.avg, label: 'Avg. articles / vendor', value: avg }
+    { icon: ICONS.flag, label: 'Critical articles', value: critical, crit: true }
   ];
   document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
     <div class="kpi-card ${k.crit ? 'is-critical' : ''}">
@@ -683,46 +608,6 @@ function renderBarChart(filtered){
   }
 }
 
-/* ---------------- Donut chart: procurement type mix ---------------- */
-function renderDonut(filtered){
-  const loose = filtered.filter(d => d.type === 'LOOSE').length;
-  const cross = filtered.filter(d => d.type === 'CROSS DOCK').length;
-  const total = loose + cross;
-  const wrap = document.getElementById('donutWrap');
-  if(total === 0){
-    wrap.innerHTML = `<div class="empty-state">No articles match the current filters.</div>`;
-    return;
-  }
-  const r = 62, cx = 74, cy = 74, sw = 24;
-  const circ = 2 * Math.PI * r;
-  const looseFrac = loose / total;
-  const looseLen = circ * looseFrac;
-  const gapPx = 3;
-  const svgDonut = `<svg width="148" height="148" viewBox="0 0 148 148" role="img" aria-label="Procurement type mix">
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--surface-3)" stroke-width="${sw}"></circle>
-    <circle class="bar-fill" data-tip="Loose: ${loose} (${Math.round(looseFrac*100)}%)" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--accent)" stroke-width="${sw}"
-      stroke-dasharray="${Math.max(looseLen-gapPx,0)} ${circ}" stroke-dashoffset="0" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="round"></circle>
-    <circle class="bar-fill" data-tip="Cross dock: ${cross} (${Math.round((1-looseFrac)*100)}%)" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--vendor-6)" stroke-width="${sw}"
-      stroke-dasharray="${Math.max(circ-looseLen-gapPx,0)} ${circ}" stroke-dashoffset="${-looseLen}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="round"></circle>
-  </svg>`;
-  wrap.innerHTML = `<div style="position:relative;">${svgDonut}<div class="donut-center-label"><span class="n">${total}</span><span class="t">articles</span></div><div class="chart-tooltip" id="donutTooltip"></div></div>
-    <div class="legend" style="flex-direction:column; align-items:flex-start; margin-top:0;">
-      <div class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Loose &middot; ${loose} (${Math.round(looseFrac*100)}%)</div>
-      <div class="legend-item"><span class="legend-swatch" style="background:var(--vendor-6)"></span>Cross dock &middot; ${cross} (${Math.round((1-looseFrac)*100)}%)</div>
-    </div>`;
-  const tooltip = document.getElementById('donutTooltip');
-  wrap.querySelectorAll('.bar-fill').forEach(el => {
-    el.addEventListener('mousemove', e => {
-      const rect = wrap.getBoundingClientRect();
-      tooltip.textContent = el.getAttribute('data-tip');
-      tooltip.style.left = (e.clientX - rect.left) + 'px';
-      tooltip.style.top = (e.clientY - rect.top - 8) + 'px';
-      tooltip.classList.add('show');
-    });
-    el.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
-  });
-}
-
 /* ---------------- Vendor cards ---------------- */
 function renderVendorCards(filtered){
   const visibleVendors = state.vendorSel.size ? VENDORS.filter(v => state.vendorSel.has(v)) : VENDORS;
@@ -780,24 +665,6 @@ function renderVendorCards(filtered){
   }).join('');
 }
 
-/* ---------------- Critical alert panel ---------------- */
-function renderCriticalPanel(filtered){
-  const rowsByVendor = VENDORS.map(v => ({ v, crit: filtered.filter(d => d.vendor === v && d.critical).length }))
-    .filter(r => r.crit > 0);
-  const list = document.getElementById('criticalList');
-  if(!rowsByVendor.length){
-    list.innerHTML = `<div class="empty-state">No critical articles in the current selection.</div>`;
-    return;
-  }
-  list.innerHTML = rowsByVendor.map(r => `
-    <div class="critical-row" style="--vc:var(--vendor-${vIndex(r.v)})">
-      <span class="vc-dot"></span>
-      <span class="vname">${esc(r.v)}</span>
-      <span class="ccount">${r.crit} critical article${r.crit > 1 ? 's' : ''}</span>
-      <button class="btn critical" data-panelnotify="${esc(r.v)}">${ICONS.bell} Notify</button>
-    </div>`).join('');
-}
-
 /* ---------------- Table ---------------- */
 function renderTable(filtered){
   const rows = [...filtered].sort((a,b) => {
@@ -837,12 +704,9 @@ function renderAll(){
   const filtered = getFiltered();
   renderResultLine(filtered);
   renderBarChart(filtered);
-  renderDonut(filtered);
   renderVendorCards(filtered);
-  renderCriticalPanel(filtered);
   renderTable(filtered);
   wireVendorCardEvents();
-  wireCriticalPanelEvents();
 }
 
 function wireVendorCardEvents(){
@@ -878,24 +742,6 @@ function wireVendorCardEvents(){
       const v = btn.dataset.copy;
       const feedback = document.querySelector(`[data-feedback="${cssEsc(v)}"]`);
       copyToClipboard(buildVendorReport(v), feedback);
-    });
-  });
-}
-
-function wireCriticalPanelEvents(){
-  document.querySelectorAll('[data-panelnotify]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const v = btn.dataset.panelnotify;
-      state.openVendor = v;
-      state.notifyOpenFor = v;
-      renderAll();
-      requestAnimationFrame(() => {
-        const panel = document.querySelector(`[data-notifypanel="${cssEsc(v)}"]`);
-        const textEl = document.querySelector(`[data-notifytext="${cssEsc(v)}"]`);
-        if(panel){ panel.classList.add('show'); if(textEl) textEl.textContent = buildVendorReport(v); }
-        const card = document.querySelector(`.vendor-card[data-vendor="${cssEsc(v)}"]`);
-        if(card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
     });
   });
 }
@@ -940,19 +786,6 @@ document.querySelectorAll('thead th[data-key]').forEach(th => {
     renderTable(getFiltered());
   });
 });
-document.getElementById('notifyAllBtn').addEventListener('click', () => {
-  const panel = document.getElementById('masterNotifyPanel');
-  const show = !panel.classList.contains('show');
-  panel.classList.toggle('show', show);
-  if(show) document.getElementById('masterNotifyText').textContent = buildMasterReport();
-});
-document.getElementById('masterNotifyClose').addEventListener('click', () => {
-  document.getElementById('masterNotifyPanel').classList.remove('show');
-});
-document.getElementById('masterCopyBtn').addEventListener('click', () => {
-  copyToClipboard(buildMasterReport(), document.getElementById('masterCopyFeedback'));
-});
-
 renderKPIs();
 renderVendorChips();
 renderAll();
