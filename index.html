@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Green Channel Vendors</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+[hidden]{display:none!important;}
+img{max-width:100%;}
+:root{
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg:#f6f8f4; --surface:#ffffff; --surface-2:#eef1e9; --surface-3:#e4e8dd;
+  --border:rgba(20,32,23,0.14); --border-soft:rgba(20,32,23,0.08);
+  --text-1:#16211a; --text-2:#4f5c4a; --text-muted:#838f7d;
+  --accent:#1c6b4f; --accent-strong:#124e39; --accent-soft:#e2f0e7; --accent-contrast:#ffffff;
+  --critical:#c9660a; --critical-text:#8a4707; --critical-soft:#fdeee0; --critical-border:#f0b374;
+  --gridline:#e4e8dd; --shadow:0 1px 2px rgba(20,32,23,0.06), 0 10px 28px -14px rgba(20,32,23,0.20);
+  --vendor-1:#2a78d6; --vendor-2:#1baf7a; --vendor-3:#c98500; --vendor-4:#e0699a; --vendor-5:#1f8f1f; --vendor-6:#4a3aa7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#0e130f; --surface:#161c15; --surface-2:#1d251b; --surface-3:#242e21;
+    --border:rgba(255,255,255,0.12); --border-soft:rgba(255,255,255,0.07);
+    --text-1:#f3f6f1; --text-2:#c4cdbf; --text-muted:#8b9686;
+    --accent:#4fd18b; --accent-strong:#7fe3ab; --accent-soft:rgba(79,209,139,0.16); --accent-contrast:#0b120d;
+    --critical:#f0904a; --critical-text:#ffb47a; --critical-soft:rgba(240,144,74,0.16); --critical-border:rgba(240,144,74,0.45);
+    --gridline:#2a3327; --shadow:0 1px 2px rgba(0,0,0,0.4), 0 14px 34px -16px rgba(0,0,0,0.6);
+    --vendor-1:#3987e5; --vendor-2:#199e70; --vendor-3:#e0a640; --vendor-4:#e084ac; --vendor-5:#3fc23f; --vendor-6:#9085e9;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0e130f; --surface:#161c15; --surface-2:#1d251b; --surface-3:#242e21;
+  --border:rgba(255,255,255,0.12); --border-soft:rgba(255,255,255,0.07);
+  --text-1:#f3f6f1; --text-2:#c4cdbf; --text-muted:#8b9686;
+  --accent:#4fd18b; --accent-strong:#7fe3ab; --accent-soft:rgba(79,209,139,0.16); --accent-contrast:#0b120d;
+  --critical:#f0904a; --critical-text:#ffb47a; --critical-soft:rgba(240,144,74,0.16); --critical-border:rgba(240,144,74,0.45);
+  --gridline:#2a3327; --shadow:0 1px 2px rgba(0,0,0,0.4), 0 14px 34px -16px rgba(0,0,0,0.6);
+  --vendor-1:#3987e5; --vendor-2:#199e70; --vendor-3:#e0a640; --vendor-4:#e084ac; --vendor-5:#3fc23f; --vendor-6:#9085e9;
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--bg); color:var(--text-1);
+  font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  padding-inline:16px; padding-block:20px;
+}
+h1,h2,h3,.font-display{font-family:"Sora","IBM Plex Sans",system-ui,sans-serif;}
+h1,h2,h3{text-wrap:balance; margin:0;}
+.wrap{max-width:1240px; margin:0 auto; display:flex; flex-direction:column; gap:22px;}
+a{color:var(--accent);}
+button{font-family:inherit;}
+
+/* ---------- header ---------- */
+.topbar{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;
+}
+.brand{display:flex; align-items:center; gap:12px;}
+.brand-mark{
+  width:46px; height:46px; border-radius:12px; background:linear-gradient(155deg,var(--accent),var(--accent-strong));
+  display:flex; align-items:center; justify-content:center; color:var(--accent-contrast); flex:none;
+  box-shadow:var(--shadow);
+}
+.brand-text h1{font-size:1.5rem; font-weight:800; letter-spacing:-0.01em;}
+.brand-text p{margin:2px 0 0; color:var(--text-2); font-size:0.87rem;}
+.season-pill{
+  display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:999px;
+  background:var(--critical-soft); border:1px solid var(--critical-border); color:var(--critical-text);
+  font-size:0.78rem; font-weight:600; letter-spacing:0.02em; white-space:nowrap;
+}
+.season-pill svg{width:14px;height:14px;}
+
+/* ---------- filter bar ---------- */
+.filterbar{
+  background:var(--surface); border:1px solid var(--border-soft); border-radius:16px; padding:14px 16px;
+  box-shadow:var(--shadow); display:flex; flex-direction:column; gap:12px;
+}
+.filter-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+.search-box{
+  position:relative; flex:1 1 220px; min-width:180px;
+}
+.search-box svg{position:absolute; left:11px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:var(--text-muted); pointer-events:none;}
+.search-box input{
+  width:100%; padding:9px 12px 9px 34px; border-radius:10px; border:1px solid var(--border);
+  background:var(--surface-2); color:var(--text-1); font-size:0.88rem; outline:none;
+}
+.search-box input:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+.seg{
+  display:inline-flex; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:3px; gap:2px;
+}
+.seg button{
+  border:none; background:transparent; color:var(--text-2); font-size:0.82rem; font-weight:600; padding:6px 12px;
+  border-radius:8px; cursor:pointer; white-space:nowrap;
+}
+.seg button.active{background:var(--accent); color:var(--accent-contrast);}
+.switch-field{display:inline-flex; align-items:center; gap:8px; cursor:pointer; user-select:none; padding:6px 4px;}
+.switch{
+  width:38px; height:22px; border-radius:999px; background:var(--surface-3); border:1px solid var(--border);
+  position:relative; transition:background .15s;
+}
+.switch::after{
+  content:""; position:absolute; width:16px; height:16px; border-radius:50%; background:var(--surface);
+  top:2px; left:2px; transition:left .15s; box-shadow:0 1px 2px rgba(0,0,0,0.3);
+}
+.switch-field input{display:none;}
+.switch-field input:checked + .switch{background:var(--critical);}
+.switch-field input:checked + .switch::after{left:18px;}
+.switch-label{font-size:0.83rem; font-weight:600; color:var(--text-2);}
+.chipset{display:flex; gap:8px; flex-wrap:wrap;}
+.vchip{
+  display:inline-flex; align-items:center; gap:7px; padding:7px 12px; border-radius:999px;
+  border:1px solid var(--border); background:var(--surface-2); color:var(--text-2); font-size:0.82rem; font-weight:600;
+  cursor:pointer; transition:all .12s;
+}
+.vchip .dot{width:9px; height:9px; border-radius:50%; flex:none;}
+.vchip.active{background:var(--surface); border-color:var(--vc); color:var(--text-1); box-shadow:0 0 0 1px var(--vc) inset;}
+.reset-btn{
+  margin-left:auto; display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:9px;
+  border:1px solid var(--border); background:var(--surface-2); color:var(--text-2); font-size:0.82rem; font-weight:600; cursor:pointer;
+}
+.reset-btn:hover{background:var(--surface-3);}
+.reset-btn svg{width:14px;height:14px;}
+.result-line{font-size:0.82rem; color:var(--text-muted); display:flex; align-items:center; gap:6px;}
+.result-line b{color:var(--text-1); font-weight:700;}
+
+/* ---------- section heading ---------- */
+.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+.section-head h2{font-size:1.05rem; font-weight:700;}
+.section-head .sub{font-size:0.82rem; color:var(--text-muted);}
+.section-head .eyebrow{
+  display:flex; align-items:center; gap:8px; font-size:0.72rem; font-weight:700; letter-spacing:0.08em;
+  color:var(--accent); text-transform:uppercase; margin-bottom:4px;
+}
+.section-head .eyebrow svg{width:14px;height:14px;}
+
+/* ---------- KPI cards ---------- */
+.kpi-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:12px;}
+.kpi-card{
+  background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; padding:14px 16px;
+  box-shadow:var(--shadow); display:flex; flex-direction:column; gap:6px; min-width:0;
+}
+.kpi-card .kpi-icon{
+  width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-soft); color:var(--accent-strong); flex:none;
+}
+.kpi-card.is-critical .kpi-icon{background:var(--critical-soft); color:var(--critical-text);}
+.kpi-card .kpi-icon svg{width:16px;height:16px;}
+.kpi-value{font-family:"Sora",sans-serif; font-size:1.7rem; font-weight:800; letter-spacing:-0.01em; font-variant-numeric:tabular-nums; line-height:1;}
+.kpi-card.is-critical .kpi-value{color:var(--critical-text);}
+.kpi-label{font-size:0.78rem; color:var(--text-muted); font-weight:600;}
+
+/* ---------- charts ---------- */
+.chart-row{display:grid; grid-template-columns:1.4fr 1fr; gap:14px; align-items:stretch;}
+.card{
+  background:var(--surface); border:1px solid var(--border-soft); border-radius:16px; padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.card h3{font-size:0.92rem; font-weight:700; margin-bottom:2px;}
+.card .card-sub{font-size:0.78rem; color:var(--text-muted); margin-bottom:10px;}
+.bar-chart-svg{width:100%; height:auto; overflow:visible;}
+.bar-track{fill:var(--surface-3);}
+.bar-fill{cursor:pointer;}
+.bar-fill.crit{fill:var(--critical);}
+.chart-tooltip{
+  position:absolute; pointer-events:none; background:var(--text-1); color:var(--bg); font-size:0.76rem;
+  padding:6px 9px; border-radius:8px; white-space:nowrap; z-index:5; opacity:0; transform:translate(-50%,-100%); transition:opacity .1s;
+  box-shadow:var(--shadow); font-weight:600;
+}
+.chart-tooltip.show{opacity:1;}
+.chart-wrap{position:relative;}
+.legend{display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-size:0.78rem; color:var(--text-2);}
+.legend-item{display:flex; align-items:center; gap:6px;}
+.legend-swatch{width:10px; height:10px; border-radius:3px; flex:none;}
+.donut-wrap{display:flex; align-items:center; gap:16px; justify-content:center; flex-wrap:wrap;}
+.donut-center-label{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none;}
+.donut-center-label .n{font-family:"Sora",sans-serif; font-size:1.5rem; font-weight:800; display:block; line-height:1;}
+.donut-center-label .t{font-size:0.7rem; color:var(--text-muted); font-weight:600;}
+
+/* ---------- vendor cards ---------- */
+.vendor-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.vendor-card{
+  background:var(--surface); border:1px solid var(--border-soft); border-radius:16px; overflow:hidden;
+  box-shadow:var(--shadow); transition:box-shadow .15s;
+}
+.vendor-card-head{
+  display:flex; align-items:center; gap:12px; padding:15px 16px; cursor:pointer; border:none; background:none;
+  width:100%; text-align:left; color:inherit; font-family:inherit;
+}
+.vendor-card-head:hover{background:var(--surface-2);}
+.vendor-swatch{width:8px; align-self:stretch; border-radius:6px; flex:none; background:var(--vc); min-height:38px;}
+.vendor-card-body{flex:1; min-width:0;}
+.vendor-name{font-weight:700; font-size:0.98rem; display:flex; align-items:center; gap:8px;}
+.vendor-meta{display:flex; gap:10px; margin-top:5px; flex-wrap:wrap;}
+.meta-chip{
+  font-size:0.74rem; font-weight:700; padding:3px 8px; border-radius:999px; background:var(--surface-2); color:var(--text-2);
+}
+.meta-chip.crit{background:var(--critical-soft); color:var(--critical-text);}
+.meta-chip.zero{background:var(--surface-2); color:var(--text-muted);}
+.vendor-chevron{width:18px; height:18px; color:var(--text-muted); flex:none; transition:transform .15s;}
+.vendor-card.open .vendor-chevron{transform:rotate(90deg);}
+.vendor-detail{max-height:0; overflow:hidden; transition:max-height .2s ease;}
+.vendor-card.open .vendor-detail{max-height:900px;}
+.vendor-detail-inner{padding:0 16px 16px; border-top:1px solid var(--border-soft);}
+.mini-list{display:flex; flex-direction:column; gap:0; margin-top:10px;}
+.mini-row{
+  display:flex; align-items:center; gap:10px; padding:8px 4px; border-bottom:1px solid var(--border-soft); font-size:0.83rem;
+}
+.mini-row:last-child{border-bottom:none;}
+.mini-row .mname{flex:1; min-width:0;}
+.mini-row .mcode{color:var(--text-muted); font-size:0.75rem; font-variant-numeric:tabular-nums;}
+.mini-row .mweight{color:var(--text-2); font-size:0.78rem; white-space:nowrap;}
+.crit-flag{
+  display:inline-flex; align-items:center; gap:4px; color:var(--critical-text); font-weight:700; font-size:0.72rem;
+  background:var(--critical-soft); padding:2px 7px; border-radius:999px; white-space:nowrap;
+}
+.crit-flag svg{width:11px;height:11px;}
+.vendor-actions{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;}
+.btn{
+  display:inline-flex; align-items:center; gap:7px; padding:8px 13px; border-radius:9px; font-size:0.82rem; font-weight:700;
+  border:1px solid var(--border); background:var(--surface-2); color:var(--text-1); cursor:pointer;
+}
+.btn svg{width:14px;height:14px;}
+.btn:hover{background:var(--surface-3);}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-contrast);}
+.btn.primary:hover{background:var(--accent-strong); border-color:var(--accent-strong);}
+.btn.critical{background:var(--critical); border-color:var(--critical); color:#fff;}
+.btn:disabled{opacity:0.45; cursor:not-allowed;}
+
+/* ---------- notify panel ---------- */
+.notify-panel{
+  margin-top:12px; border:1px solid var(--critical-border); background:var(--critical-soft); border-radius:12px; padding:12px 14px; display:none;
+}
+.notify-panel.show{display:block;}
+.notify-panel-head{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px;}
+.notify-panel-head span{font-weight:700; font-size:0.82rem; color:var(--critical-text); display:flex; align-items:center; gap:6px;}
+.notify-panel-head svg{width:15px;height:15px;}
+.notify-close{background:none; border:none; cursor:pointer; color:var(--critical-text); padding:2px;}
+.notify-close svg{width:15px;height:15px;}
+.notify-text{
+  background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:0.79rem;
+  white-space:pre-wrap; color:var(--text-1); max-height:220px; overflow-y:auto; font-family:"IBM Plex Sans",monospace;
+  line-height:1.5;
+}
+.notify-footer{display:flex; align-items:center; gap:8px; margin-top:9px;}
+.copy-feedback{font-size:0.76rem; color:var(--accent-strong); font-weight:700; opacity:0; transition:opacity .15s;}
+.copy-feedback.show{opacity:1;}
+
+/* ---------- critical panel ---------- */
+.critical-panel{background:var(--surface); border:1px solid var(--critical-border); border-radius:16px; padding:16px 18px; box-shadow:var(--shadow);}
+.critical-panel h2{color:var(--critical-text);}
+.critical-list{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
+.critical-row{
+  display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:11px; background:var(--surface-2); flex-wrap:wrap;
+}
+.critical-row .vc-dot{width:10px; height:10px; border-radius:50%; background:var(--vc); flex:none;}
+.critical-row .vname{font-weight:700; font-size:0.88rem; flex:1; min-width:120px;}
+.critical-row .ccount{font-size:0.78rem; color:var(--critical-text); font-weight:700;}
+
+/* ---------- table ---------- */
+.table-wrap{overflow-x:auto; border:1px solid var(--border-soft); border-radius:14px;}
+table{width:100%; border-collapse:collapse; font-size:0.85rem; min-width:680px;}
+thead th{
+  position:sticky; top:0; background:var(--surface-2); text-align:left; padding:10px 12px; font-size:0.74rem;
+  font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--text-muted); cursor:pointer; white-space:nowrap;
+  border-bottom:1px solid var(--border);
+}
+thead th:hover{color:var(--text-1);}
+thead th .sort-ind{margin-left:4px; opacity:0.5; font-size:0.7rem;}
+thead th.sorted .sort-ind{opacity:1; color:var(--accent);}
+tbody td{padding:10px 12px; border-bottom:1px solid var(--border-soft); vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr.crit-row{background:var(--critical-soft);}
+tbody tr.crit-row td:first-child{box-shadow:inset 3px 0 0 var(--critical);}
+tbody tr:hover{background:var(--surface-2);}
+tbody tr.crit-row:hover{background:var(--critical-soft); filter:brightness(0.97);}
+.td-vendor{display:flex; align-items:center; gap:8px; font-weight:600; white-space:nowrap;}
+.td-vendor .dot{width:9px; height:9px; border-radius:50%; background:var(--vc); flex:none;}
+.td-code{color:var(--text-muted); font-variant-numeric:tabular-nums; white-space:nowrap;}
+.type-badge{
+  display:inline-flex; padding:3px 9px; border-radius:999px; font-size:0.72rem; font-weight:700; white-space:nowrap;
+}
+.type-badge.loose{background:var(--accent-soft); color:var(--accent-strong);}
+.type-badge.crossdock{background:var(--surface-3); color:var(--text-2);}
+.empty-state{padding:40px 20px; text-align:center; color:var(--text-muted); font-size:0.9rem;}
+
+footer.note{font-size:0.78rem; color:var(--text-muted); text-align:center; padding-block:4px;}
+
+@media (max-width:900px){
+  .kpi-grid{grid-template-columns:repeat(3,1fr);}
+  .chart-row{grid-template-columns:1fr;}
+  .vendor-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:560px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .vendor-grid{grid-template-columns:1fr;}
+  .reset-btn{margin-left:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" width="24" height="24"><path d="M12 3c1.6 2 2 4 1.4 6.2C15 8.6 16.8 8.6 18 10c1.8 1.8 1.8 5-.6 7.4-2.6 2.6-6.6 2.9-9.2.3-2.6-2.6-2.6-6.8 0-9.4C9.6 6.9 10.8 4.8 12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="brand-text">
+        <h1>Green Channel Vendors</h1>
+        <p>Fruit procurement dashboard &middot; supply mapping across 6 approved vendors</p>
+      </div>
+    </div>
+    <span class="season-pill">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 3 21h18L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="0.6" fill="currentColor"/></svg>
+      This season's orange-flagged SKUs are critical articles
+    </span>
+  </header>
+
+  <section class="filterbar" aria-label="Filters">
+    <div class="filter-row">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input id="searchInput" type="text" placeholder="Search article name or item code&hellip;" autocomplete="off">
+      </div>
+      <div class="seg" id="typeSeg" role="group" aria-label="Procurement type">
+        <button data-type="ALL" class="active">All types</button>
+        <button data-type="LOOSE">Loose</button>
+        <button data-type="CROSS DOCK">Cross dock</button>
+      </div>
+      <label class="switch-field">
+        <input type="checkbox" id="criticalOnly">
+        <span class="switch"></span>
+        <span class="switch-label">Critical only</span>
+      </label>
+      <button class="reset-btn" id="resetBtn">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 4v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Reset filters
+      </button>
+    </div>
+    <div class="filter-row">
+      <div class="chipset" id="vendorChips"></div>
+    </div>
+    <div class="result-line" id="resultLine"></div>
+  </section>
+
+  <section class="kpi-grid" id="kpiGrid"></section>
+
+  <section class="chart-row">
+    <div class="card">
+      <div class="section-head" style="margin-bottom:2px;">
+        <div>
+          <h3>Articles by vendor</h3>
+          <p class="card-sub">Total SKUs vs. critical SKUs per vendor &mdash; updates with filters</p>
+        </div>
+      </div>
+      <div class="chart-wrap" id="barChartWrap"></div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--surface-3)"></span>Total articles</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--critical)"></span>Critical articles</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Procurement type mix</h3>
+      <p class="card-sub">Loose vs. cross dock, in current selection</p>
+      <div class="chart-wrap donut-wrap" id="donutWrap"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head" style="margin-bottom:12px;">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.7"/></svg>
+          Vendors
+        </div>
+        <h2>Tap a vendor to see its full article list</h2>
+      </div>
+      <span class="sub">Critical articles are flagged orange, matching the source sheet</span>
+    </div>
+    <div class="vendor-grid" id="vendorGrid"></div>
+  </section>
+
+  <section class="critical-panel">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow" style="color:var(--critical-text);">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.3" r="0.6" fill="currentColor"/></svg>
+          Critical article alerts
+        </div>
+        <h2>Notify vendors of critical stock priorities</h2>
+      </div>
+      <button class="btn critical" id="notifyAllBtn">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 3-1 5-2 6h16c-1-1-2-3-2-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 18a2.5 2.5 0 0 0 5 0" stroke="currentColor" stroke-width="1.7"/></svg>
+        Build master critical report
+      </button>
+    </div>
+    <div class="critical-list" id="criticalList"></div>
+    <div class="notify-panel" id="masterNotifyPanel">
+      <div class="notify-panel-head">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 3-1 5-2 6h16c-1-1-2-3-2-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          Master critical article report
+        </span>
+        <button class="notify-close" id="masterNotifyClose"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="notify-text" id="masterNotifyText"></div>
+      <div class="notify-footer">
+        <button class="btn primary" id="masterCopyBtn">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7"/></svg>
+          Copy report
+        </button>
+        <span class="copy-feedback" id="masterCopyFeedback">Copied to clipboard</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head" style="margin-bottom:12px;">
+      <div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 5h18M3 12h18M3 19h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Full data
+        </div>
+        <h2>All articles across vendors</h2>
+      </div>
+      <span class="sub">Click a column header to sort &middot; orange rows are critical</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-key="vendor">Vendor<span class="sort-ind">&#8597;</span></th>
+            <th data-key="name">Product<span class="sort-ind">&#8597;</span></th>
+            <th data-key="code">Item code<span class="sort-ind">&#8597;</span></th>
+            <th data-key="weight">Weight<span class="sort-ind">&#8597;</span></th>
+            <th data-key="type">Procurement<span class="sort-ind">&#8597;</span></th>
+            <th data-key="critical">Status<span class="sort-ind">&#8597;</span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="note">Data sourced from the Green Channel vendor sheet &middot; 6 vendors &middot; 50 articles &middot; orange = critical article for this season</footer>
+
+</div>
+
+<script>
+const DATA = [
+{"vendor":"Apple Fresh","code":647625,"name":"Crunchy Shimla Apple Large","weight":"1Piece","type":"LOOSE","critical":true},
+{"vendor":"Apple Fresh","code":22087,"name":"Daily Pomegranate","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Apple Fresh","code":63041,"name":"Indian Royal Gala Apple","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Apple Fresh","code":28097,"name":"Kimia Dates","weight":"1 BOX 400GM","type":"LOOSE","critical":false},
+{"vendor":"Apple Fresh","code":676348,"name":"Mini Red Flesh Dragon Fruit","weight":"2 piece","type":"CROSS DOCK","critical":true},
+{"vendor":"Apple Fresh","code":172820,"name":"Pear Nakh","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Apple Fresh","code":832395,"name":"Pear Nashpati","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Apple Fresh","code":10502,"name":"Pomegranate","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Apple Fresh","code":17504,"name":"Premium Kinnaur Apple","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Apple Fresh","code":22863,"name":"Red Flesh Dragon Fruit Indian","weight":"1Piece","type":"LOOSE","critical":true},
+{"vendor":"Syed","code":21024,"name":"Apple Kashmiri","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"Syed","code":21047,"name":"Daily Juice Sweet Lime","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Syed","code":22087,"name":"Daily Pomegranate","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Syed","code":10557,"name":"Kiran Watermelon","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Syed","code":17456,"name":"Muskmelon","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Syed","code":10481,"name":"Nagpur Orange","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"Syed","code":17446,"name":"Papaya","weight":"1pc","type":"LOOSE","critical":true},
+{"vendor":"Syed","code":30807,"name":"Pineapple","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Syed","code":17504,"name":"Premium Kinnaur Apple","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Syed","code":null,"name":"Sapota","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"DMC","code":21024,"name":"Apple Kashmiri","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"DMC","code":389055,"name":"Crunchy Shimla Apple","weight":"1 Piece","type":"LOOSE","critical":false},
+{"vendor":"DMC","code":17504,"name":"Premium Kinnaur Apple","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"DMC","code":1007,"name":"Yelakki Banana","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"DMC","code":788544,"name":"Baby Yelakki Banana","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"DMC","code":1004,"name":"Robusta Banana Mini Pack","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"Mr Fruiuts","code":5932,"name":"Apple - Ber","weight":"500gm","type":"CROSS DOCK","critical":false},
+{"vendor":"Mr Fruiuts","code":21024,"name":"Apple Kashmiri","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruiuts","code":22446,"name":"Avocado Semiripe Indian (Butterfruit)","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruiuts","code":1114,"name":"Chikoo - Sapota","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruiuts","code":647625,"name":"Crunchy Shimla Apple Large","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruiuts","code":30807,"name":"Pineapple","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"Mr Fruiuts","code":17455,"name":"Pineapple","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"VM agro","code":1114,"name":"Chikoo - Sapota","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"VM agro","code":21047,"name":"Daily Juice Sweet Lime","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"VM agro","code":10491,"name":"Guava","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"VM agro","code":17456,"name":"Muskmelon","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"VM agro","code":17446,"name":"Papaya","weight":"1pc","type":"LOOSE","critical":true},
+{"vendor":"VM agro","code":7472,"name":"Passion Fruit","weight":"250g","type":"CROSS DOCK","critical":false},
+{"vendor":"VM agro","code":30807,"name":"Pineapple","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"VM agro","code":13264,"name":"Water Chestnut","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"VM agro","code":18305,"name":"Wood Apple","weight":"1Piece","type":"LOOSE","critical":false},
+{"vendor":"VM agro","code":null,"name":"Mango Tothapuri","weight":"1pc","type":"LOOSE","critical":true},
+{"vendor":"Srinivas GK","code":11440,"name":"Bangalore Blue Grapes","weight":"250g","type":"CROSS DOCK","critical":false},
+{"vendor":"Srinivas GK","code":1114,"name":"Chikoo - Sapota","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"Srinivas GK","code":10486,"name":"Custard Apple","weight":"1kg","type":"LOOSE","critical":true},
+{"vendor":"Srinivas GK","code":22087,"name":"Daily Pomegranate","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Srinivas GK","code":897435,"name":"Dilkush Grapes","weight":"500g","type":"CROSS DOCK","critical":false},
+{"vendor":"Srinivas GK","code":10491,"name":"Guava","weight":"1kg","type":"LOOSE","critical":false},
+{"vendor":"Srinivas GK","code":18502,"name":"Premium Thai Guava","weight":"1Piece","type":"LOOSE","critical":true}
+];
+
+const VENDORS = [...new Set(DATA.map(d => d.vendor))];
+const vIndex = name => VENDORS.indexOf(name) + 1;
+
+const ICONS = {
+  chevron: '<svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  flag: '<svg viewBox="0 0 24 24" fill="none"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.3" r="0.6" fill="currentColor"/></svg>',
+  bell: '<svg viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 3-1 5-2 6h16c-1-1-2-3-2-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 18a2.5 2.5 0 0 0 5 0" stroke="currentColor" stroke-width="1.7"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7"/></svg>',
+  box: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 8l9-5 9 5-9 5-9-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 8v8l9 5 9-5V8" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 13v8" stroke="currentColor" stroke-width="1.6"/></svg>',
+  users: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.7"/></svg>',
+  truck: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 6h11v10H3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 10h4l3 3v3h-7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7" cy="18" r="1.6" stroke="currentColor" stroke-width="1.4"/><circle cx="17.5" cy="18" r="1.6" stroke="currentColor" stroke-width="1.4"/></svg>',
+  avg: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 19V9m6 10V5m6 14v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5 9 17l11-11" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+};
+
+const state = {
+  search: '',
+  type: 'ALL',
+  criticalOnly: false,
+  vendorSel: new Set(),
+  sortKey: 'vendor',
+  sortDir: 1,
+  openVendor: null,
+  notifyOpenFor: null
+};
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function matchesFilters(row){
+  if(state.type !== 'ALL' && row.type !== state.type) return false;
+  if(state.criticalOnly && !row.critical) return false;
+  if(state.vendorSel.size && !state.vendorSel.has(row.vendor)) return false;
+  if(state.search){
+    const q = state.search.toLowerCase();
+    const codeStr = row.code == null ? '' : String(row.code);
+    if(!row.name.toLowerCase().includes(q) && !codeStr.includes(q) && !row.vendor.toLowerCase().includes(q)) return false;
+  }
+  return true;
+}
+
+function getFiltered(){ return DATA.filter(matchesFilters); }
+
+function vendorRows(vendor, applyFilters){
+  return DATA.filter(d => d.vendor === vendor && (!applyFilters || matchesFilters(d)));
+}
+
+function copyToClipboard(text, feedbackEl){
+  const done = () => {
+    if(feedbackEl){
+      feedbackEl.classList.add('show');
+      setTimeout(() => feedbackEl.classList.remove('show'), 1800);
+    }
+  };
+  try{
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  }catch(e){
+    fallbackCopy(text, done);
+  }
+}
+function fallbackCopy(text, done){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    done();
+  }catch(e){ /* clipboard unavailable; text remains visible for manual copy */ }
+}
+
+function buildVendorReport(vendor){
+  const crit = vendorRows(vendor, false).filter(r => r.critical);
+  if(!crit.length){
+    return `Subject: Stock check-in - ${vendor}\n\nHi ${vendor} team,\n\nNo critical articles are flagged for you this season yet. Please continue regular supply as planned.\n\n- Green Channel Team`;
+  }
+  const lines = crit.map((r,i) => `${i+1}. ${r.name}${r.code != null ? ' (code ' + r.code + ')' : ''} - ${r.weight}, ${r.type}`);
+  return `Subject: Critical article priority - ${vendor}\n\nHi ${vendor} team,\n\nPlease ensure guaranteed availability and priority dispatch for the following critical articles this season:\n\n${lines.join('\n')}\n\nThese are marked critical for continuity of green channel supply. Kindly confirm stock status at the earliest.\n\n- Green Channel Team`;
+}
+
+function buildMasterReport(){
+  const critByVendor = VENDORS.map(v => ({ v, rows: vendorRows(v, false).filter(r => r.critical) })).filter(x => x.rows.length);
+  if(!critByVendor.length) return 'No critical articles are currently flagged across any vendor.';
+  let out = `Subject: Critical article report - all vendors\n\nSeason critical articles by vendor:\n`;
+  critByVendor.forEach(({v, rows}) => {
+    out += `\n${v} (${rows.length} critical):\n`;
+    rows.forEach((r,i) => { out += `  ${i+1}. ${r.name}${r.code != null ? ' (code ' + r.code + ')' : ''} - ${r.weight}, ${r.type}\n`; });
+  });
+  out += `\n- Green Channel Team`;
+  return out;
+}
+
+/* ---------------- KPIs (global, unfiltered truth) ---------------- */
+function renderKPIs(){
+  const total = DATA.length;
+  const critical = DATA.filter(d => d.critical).length;
+  const vendorsWithCrit = VENDORS.filter(v => DATA.some(d => d.vendor === v && d.critical)).length;
+  const crossDock = DATA.filter(d => d.type === 'CROSS DOCK').length;
+  const loose = total - crossDock;
+  const avg = (total / VENDORS.length).toFixed(1);
+  const kpis = [
+    { icon: ICONS.users, label: 'Approved vendors', value: VENDORS.length },
+    { icon: ICONS.box, label: 'Total articles', value: total },
+    { icon: ICONS.flag, label: 'Critical articles', value: critical, crit: true },
+    { icon: ICONS.bell, label: 'Vendors with criticals', value: `${vendorsWithCrit}/${VENDORS.length}`, crit: true },
+    { icon: ICONS.truck, label: 'Cross dock items', value: crossDock },
+    { icon: ICONS.avg, label: 'Avg. articles / vendor', value: avg }
+  ];
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
+    <div class="kpi-card ${k.crit ? 'is-critical' : ''}">
+      <div class="kpi-icon">${k.icon}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-label">${k.label}</div>
+    </div>`).join('');
+}
+
+/* ---------------- Filter bar (vendor chips + result line) ---------------- */
+function renderVendorChips(){
+  document.getElementById('vendorChips').innerHTML = VENDORS.map(v => {
+    const active = state.vendorSel.has(v);
+    return `<button class="vchip ${active ? 'active' : ''}" data-vendor="${esc(v)}" style="--vc:var(--vendor-${vIndex(v)})">
+      <span class="dot" style="background:var(--vendor-${vIndex(v)})"></span>${esc(v)}
+    </button>`;
+  }).join('');
+}
+
+function renderResultLine(filtered){
+  document.getElementById('resultLine').innerHTML =
+    `<b>${filtered.length}</b> of ${DATA.length} articles shown &middot; across <b>${new Set(filtered.map(f=>f.vendor)).size}</b> vendor(s)`;
+}
+
+/* ---------------- Bar chart: articles by vendor (total vs critical) ---------------- */
+function renderBarChart(filtered){
+  const rowsByVendor = VENDORS.map(v => {
+    const rows = filtered.filter(d => d.vendor === v);
+    return { v, total: rows.length, crit: rows.filter(d => d.critical).length };
+  });
+  const maxVal = Math.max(1, ...rowsByVendor.map(r => r.total));
+  const w = 560, barH = 22, gap = 14, padL = 96, padR = 46, padTop = 6;
+  const h = rowsByVendor.length * (barH + gap) - gap + padTop + 6;
+  const scale = x => (x / maxVal) * (w - padL - padR);
+
+  let svg = `<svg class="bar-chart-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="Articles by vendor">`;
+  rowsByVendor.forEach((r, i) => {
+    const y = padTop + i * (barH + gap);
+    const totalW = scale(r.total);
+    const critW = scale(r.crit);
+    svg += `<text x="${padL - 10}" y="${y + barH/2 + 4}" text-anchor="end" font-size="11.5" font-weight="600" fill="var(--text-2)">${esc(r.v)}</text>`;
+    svg += `<rect class="bar-track" x="${padL}" y="${y}" width="${w-padL-padR}" height="${barH}" rx="5"></rect>`;
+    svg += `<rect class="bar-fill" data-tip="${esc(r.v)}: ${r.total} total" x="${padL}" y="${y}" width="${totalW}" height="${barH}" rx="5" fill="var(--vendor-${vIndex(r.v)})" opacity="0.9"></rect>`;
+    if(r.crit > 0){
+      svg += `<rect class="bar-fill crit" data-tip="${esc(r.v)}: ${r.crit} critical" x="${padL}" y="${y}" width="${critW}" height="${barH}" rx="5"></rect>`;
+    }
+    svg += `<text x="${padL + totalW + 8}" y="${y + barH/2 + 4}" font-size="11.5" font-weight="700" fill="var(--text-1)" font-variant-numeric="tabular-nums">${r.total}${r.crit ? ' ('+r.crit+' crit.)' : ''}</text>`;
+  });
+  svg += `</svg>`;
+
+  const wrap = document.getElementById('barChartWrap');
+  wrap.innerHTML = svg + `<div class="chart-tooltip" id="barTooltip"></div>`;
+  const tooltip = document.getElementById('barTooltip');
+  wrap.querySelectorAll('.bar-fill').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = wrap.getBoundingClientRect();
+      tooltip.textContent = el.getAttribute('data-tip');
+      tooltip.style.left = (e.clientX - rect.left) + 'px';
+      tooltip.style.top = (e.clientY - rect.top - 8) + 'px';
+      tooltip.classList.add('show');
+    });
+    el.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+  });
+  if(rowsByVendor.every(r => r.total === 0)){
+    wrap.innerHTML = `<div class="empty-state">No articles match the current filters.</div>`;
+  }
+}
+
+/* ---------------- Donut chart: procurement type mix ---------------- */
+function renderDonut(filtered){
+  const loose = filtered.filter(d => d.type === 'LOOSE').length;
+  const cross = filtered.filter(d => d.type === 'CROSS DOCK').length;
+  const total = loose + cross;
+  const wrap = document.getElementById('donutWrap');
+  if(total === 0){
+    wrap.innerHTML = `<div class="empty-state">No articles match the current filters.</div>`;
+    return;
+  }
+  const r = 62, cx = 74, cy = 74, sw = 24;
+  const circ = 2 * Math.PI * r;
+  const looseFrac = loose / total;
+  const looseLen = circ * looseFrac;
+  const gapPx = 3;
+  const svgDonut = `<svg width="148" height="148" viewBox="0 0 148 148" role="img" aria-label="Procurement type mix">
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--surface-3)" stroke-width="${sw}"></circle>
+    <circle class="bar-fill" data-tip="Loose: ${loose} (${Math.round(looseFrac*100)}%)" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--accent)" stroke-width="${sw}"
+      stroke-dasharray="${Math.max(looseLen-gapPx,0)} ${circ}" stroke-dashoffset="0" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="round"></circle>
+    <circle class="bar-fill" data-tip="Cross dock: ${cross} (${Math.round((1-looseFrac)*100)}%)" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--vendor-6)" stroke-width="${sw}"
+      stroke-dasharray="${Math.max(circ-looseLen-gapPx,0)} ${circ}" stroke-dashoffset="${-looseLen}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="round"></circle>
+  </svg>`;
+  wrap.innerHTML = `<div style="position:relative;">${svgDonut}<div class="donut-center-label"><span class="n">${total}</span><span class="t">articles</span></div><div class="chart-tooltip" id="donutTooltip"></div></div>
+    <div class="legend" style="flex-direction:column; align-items:flex-start; margin-top:0;">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Loose &middot; ${loose} (${Math.round(looseFrac*100)}%)</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--vendor-6)"></span>Cross dock &middot; ${cross} (${Math.round((1-looseFrac)*100)}%)</div>
+    </div>`;
+  const tooltip = document.getElementById('donutTooltip');
+  wrap.querySelectorAll('.bar-fill').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = wrap.getBoundingClientRect();
+      tooltip.textContent = el.getAttribute('data-tip');
+      tooltip.style.left = (e.clientX - rect.left) + 'px';
+      tooltip.style.top = (e.clientY - rect.top - 8) + 'px';
+      tooltip.classList.add('show');
+    });
+    el.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+  });
+}
+
+/* ---------------- Vendor cards ---------------- */
+function renderVendorCards(filtered){
+  const visibleVendors = state.vendorSel.size ? VENDORS.filter(v => state.vendorSel.has(v)) : VENDORS;
+  const grid = document.getElementById('vendorGrid');
+  if(!visibleVendors.length){
+    grid.innerHTML = `<div class="empty-state">No vendors selected.</div>`;
+    return;
+  }
+  grid.innerHTML = visibleVendors.map(v => {
+    const allRows = vendorRows(v, false);
+    const shownRows = filtered.filter(d => d.vendor === v);
+    const critCount = shownRows.filter(d => d.critical).length;
+    const isOpen = state.openVendor === v;
+    const rowsHtml = shownRows.length ? shownRows.map(r => `
+      <div class="mini-row">
+        <span class="mname">${esc(r.name)}</span>
+        <span class="mcode">${r.code != null ? '#'+r.code : '&mdash;'}</span>
+        <span class="mweight">${esc(r.weight || '')}</span>
+        ${r.critical ? `<span class="crit-flag">${ICONS.flag}Critical</span>` : ''}
+      </div>`).join('') : `<div class="empty-state" style="padding:16px 0;">No articles match the current filters for this vendor.</div>`;
+
+    return `
+    <div class="vendor-card ${isOpen ? 'open' : ''}" style="--vc:var(--vendor-${vIndex(v)})" data-vendor="${esc(v)}">
+      <button class="vendor-card-head" data-toggle="${esc(v)}">
+        <span class="vendor-swatch"></span>
+        <span class="vendor-card-body">
+          <span class="vendor-name">${esc(v)}</span>
+          <span class="vendor-meta">
+            <span class="meta-chip">${shownRows.length} of ${allRows.length} articles</span>
+            <span class="meta-chip ${critCount ? 'crit' : 'zero'}">${critCount ? ICONS.flag + ' ' : ''}${critCount} critical</span>
+          </span>
+        </span>
+        <span class="vendor-chevron">${ICONS.chevron}</span>
+      </button>
+      <div class="vendor-detail">
+        <div class="vendor-detail-inner">
+          <div class="mini-list">${rowsHtml}</div>
+          <div class="vendor-actions">
+            <button class="btn critical" data-notify="${esc(v)}" ${critCount ? '' : 'disabled'}>${ICONS.bell} Notify critical articles</button>
+          </div>
+          <div class="notify-panel" data-notifypanel="${esc(v)}">
+            <div class="notify-panel-head">
+              <span>${ICONS.bell} Message preview &mdash; ${esc(v)}</span>
+              <button class="notify-close" data-notifyclose="${esc(v)}">${ICONS.close}</button>
+            </div>
+            <div class="notify-text" data-notifytext="${esc(v)}"></div>
+            <div class="notify-footer">
+              <button class="btn primary" data-copy="${esc(v)}">${ICONS.copy} Copy message</button>
+              <span class="copy-feedback" data-feedback="${esc(v)}">Copied to clipboard</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ---------------- Critical alert panel ---------------- */
+function renderCriticalPanel(filtered){
+  const rowsByVendor = VENDORS.map(v => ({ v, crit: filtered.filter(d => d.vendor === v && d.critical).length }))
+    .filter(r => r.crit > 0);
+  const list = document.getElementById('criticalList');
+  if(!rowsByVendor.length){
+    list.innerHTML = `<div class="empty-state">No critical articles in the current selection.</div>`;
+    return;
+  }
+  list.innerHTML = rowsByVendor.map(r => `
+    <div class="critical-row" style="--vc:var(--vendor-${vIndex(r.v)})">
+      <span class="vc-dot"></span>
+      <span class="vname">${esc(r.v)}</span>
+      <span class="ccount">${r.crit} critical article${r.crit > 1 ? 's' : ''}</span>
+      <button class="btn critical" data-panelnotify="${esc(r.v)}">${ICONS.bell} Notify</button>
+    </div>`).join('');
+}
+
+/* ---------------- Table ---------------- */
+function renderTable(filtered){
+  const rows = [...filtered].sort((a,b) => {
+    let av = a[state.sortKey], bv = b[state.sortKey];
+    if(state.sortKey === 'critical'){ av = av ? 1 : 0; bv = bv ? 1 : 0; }
+    if(state.sortKey === 'code'){ av = av ?? -1; bv = bv ?? -1; }
+    if(typeof av === 'string') av = av.toLowerCase();
+    if(typeof bv === 'string') bv = bv.toLowerCase();
+    if(av < bv) return -1 * state.sortDir;
+    if(av > bv) return 1 * state.sortDir;
+    return a.name.localeCompare(b.name);
+  });
+  const body = document.getElementById('tableBody');
+  if(!rows.length){
+    body.innerHTML = `<tr><td colspan="6"><div class="empty-state">No articles match the current filters.</div></td></tr>`;
+  }else{
+    body.innerHTML = rows.map(r => `
+      <tr class="${r.critical ? 'crit-row' : ''}">
+        <td><span class="td-vendor" style="--vc:var(--vendor-${vIndex(r.vendor)})"><span class="dot"></span>${esc(r.vendor)}</span></td>
+        <td>${esc(r.name)}</td>
+        <td class="td-code">${r.code != null ? r.code : '&mdash;'}</td>
+        <td>${r.weight ? esc(r.weight) : '&mdash;'}</td>
+        <td><span class="type-badge ${r.type === 'LOOSE' ? 'loose' : 'crossdock'}">${r.type ? esc(r.type) : '&mdash;'}</span></td>
+        <td>${r.critical ? `<span class="crit-flag">${ICONS.flag}Critical</span>` : '<span style="color:var(--text-muted); font-size:0.82rem;">Standard</span>'}</td>
+      </tr>`).join('');
+  }
+  document.querySelectorAll('thead th').forEach(th => {
+    th.classList.toggle('sorted', th.dataset.key === state.sortKey);
+    const ind = th.querySelector('.sort-ind');
+    if(th.dataset.key === state.sortKey) ind.innerHTML = state.sortDir === 1 ? '&#8593;' : '&#8595;';
+    else ind.innerHTML = '&#8597;';
+  });
+}
+
+/* ---------------- Master render + wiring ---------------- */
+function renderAll(){
+  const filtered = getFiltered();
+  renderResultLine(filtered);
+  renderBarChart(filtered);
+  renderDonut(filtered);
+  renderVendorCards(filtered);
+  renderCriticalPanel(filtered);
+  renderTable(filtered);
+  wireVendorCardEvents();
+  wireCriticalPanelEvents();
+}
+
+function wireVendorCardEvents(){
+  document.querySelectorAll('[data-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.toggle;
+      state.openVendor = state.openVendor === v ? null : v;
+      renderAll();
+    });
+  });
+  document.querySelectorAll('[data-notify]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.notify;
+      state.notifyOpenFor = state.notifyOpenFor === v ? null : v;
+      const panel = document.querySelector(`[data-notifypanel="${cssEsc(v)}"]`);
+      const textEl = document.querySelector(`[data-notifytext="${cssEsc(v)}"]`);
+      if(panel){
+        panel.classList.toggle('show', state.notifyOpenFor === v);
+        if(state.notifyOpenFor === v && textEl) textEl.textContent = buildVendorReport(v);
+      }
+    });
+  });
+  document.querySelectorAll('[data-notifyclose]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.notifyclose;
+      state.notifyOpenFor = null;
+      const panel = document.querySelector(`[data-notifypanel="${cssEsc(v)}"]`);
+      if(panel) panel.classList.remove('show');
+    });
+  });
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.copy;
+      const feedback = document.querySelector(`[data-feedback="${cssEsc(v)}"]`);
+      copyToClipboard(buildVendorReport(v), feedback);
+    });
+  });
+}
+
+function wireCriticalPanelEvents(){
+  document.querySelectorAll('[data-panelnotify]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.panelnotify;
+      state.openVendor = v;
+      state.notifyOpenFor = v;
+      renderAll();
+      requestAnimationFrame(() => {
+        const panel = document.querySelector(`[data-notifypanel="${cssEsc(v)}"]`);
+        const textEl = document.querySelector(`[data-notifytext="${cssEsc(v)}"]`);
+        if(panel){ panel.classList.add('show'); if(textEl) textEl.textContent = buildVendorReport(v); }
+        const card = document.querySelector(`.vendor-card[data-vendor="${cssEsc(v)}"]`);
+        if(card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  });
+}
+
+function cssEsc(s){ return String(s).replace(/["\\]/g, '\\$&'); }
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  state.search = e.target.value.trim();
+  renderAll();
+});
+document.getElementById('typeSeg').addEventListener('click', e => {
+  const btn = e.target.closest('button[data-type]');
+  if(!btn) return;
+  state.type = btn.dataset.type;
+  document.querySelectorAll('#typeSeg button').forEach(b => b.classList.toggle('active', b === btn));
+  renderAll();
+});
+document.getElementById('criticalOnly').addEventListener('change', e => {
+  state.criticalOnly = e.target.checked;
+  renderAll();
+});
+document.getElementById('resetBtn').addEventListener('click', () => {
+  state.search = ''; state.type = 'ALL'; state.criticalOnly = false; state.vendorSel.clear();
+  document.getElementById('searchInput').value = '';
+  document.getElementById('criticalOnly').checked = false;
+  document.querySelectorAll('#typeSeg button').forEach(b => b.classList.toggle('active', b.dataset.type === 'ALL'));
+  renderVendorChips();
+  renderAll();
+});
+document.getElementById('vendorChips').addEventListener('click', e => {
+  const chip = e.target.closest('.vchip');
+  if(!chip) return;
+  const v = chip.dataset.vendor;
+  if(state.vendorSel.has(v)) state.vendorSel.delete(v); else state.vendorSel.add(v);
+  renderVendorChips();
+  renderAll();
+});
+document.querySelectorAll('thead th[data-key]').forEach(th => {
+  th.addEventListener('click', () => {
+    if(state.sortKey === th.dataset.key) state.sortDir *= -1;
+    else { state.sortKey = th.dataset.key; state.sortDir = 1; }
+    renderTable(getFiltered());
+  });
+});
+document.getElementById('notifyAllBtn').addEventListener('click', () => {
+  const panel = document.getElementById('masterNotifyPanel');
+  const show = !panel.classList.contains('show');
+  panel.classList.toggle('show', show);
+  if(show) document.getElementById('masterNotifyText').textContent = buildMasterReport();
+});
+document.getElementById('masterNotifyClose').addEventListener('click', () => {
+  document.getElementById('masterNotifyPanel').classList.remove('show');
+});
+document.getElementById('masterCopyBtn').addEventListener('click', () => {
+  copyToClipboard(buildMasterReport(), document.getElementById('masterCopyFeedback'));
+});
+
+renderKPIs();
+renderVendorChips();
+renderAll();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,5 @@
+_csv/
+_extracted/
+vendor_data.json
+dashboard.html
+*.xlsx
